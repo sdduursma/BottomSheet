@@ -86,12 +86,8 @@ struct BottomSheet<T: Any, ContentView: View>: ViewModifier {
     }
 
     private func updatePresentation(_ isPresented: Bool) {
-        guard let windowScene = UIApplication.shared.connectedScenes.first(where: {
-            $0.activationState == .foregroundActive
-        }) as? UIWindowScene else { return }
-
-        
-        guard let root = windowScene.keyWindow?.rootViewController else { return }
+        guard let window = UIApplication.shared.keyWindow else { return }
+        guard let root = window.rootViewController else { return }
         var controllerToPresentFrom = root
         while let presented = controllerToPresentFrom.presentedViewController {
             controllerToPresentFrom = presented
